@@ -5,5 +5,5 @@ urlpatterns = [
     path('', homeView, name='home'),
     path('signup/', signUpView, name='signup'),
     path('add/', addView, name='add'),
-    path('delete/', deleteView, name='delete')
+    path('delete/<int:taskid>', deleteView, name='delete')
 ]

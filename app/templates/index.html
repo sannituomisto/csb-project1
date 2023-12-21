@@ -6,9 +6,9 @@
             {% for task in tasks %}
 		    <li>
                 {{task.content}}
-                <form action="delete/" method="POST">
+                <form action="delete/{{task.id}}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <input type="hidden" name="task_id" value="{{task.id}}">
                     <input type="submit" value="Delete"/>
                 </form>
                 <br/>

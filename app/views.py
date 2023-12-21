@@ -9,9 +9,9 @@ from django.contrib import messages
 
 def signUpView(request):
     if request.method == 'GET':
-    # if request.method == 'POST':
+    # fixed line 11: if request.method == 'POST':
         form = RegisterForm(request.GET)
-        #form = RegisterForm(request.POST)
+        # fixed line 13: form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -23,7 +23,8 @@ def signUpView(request):
         form = RegisterForm()
     return render(request, 'signup.html', {'form': form})
 
-# @login_required
+
+@login_required
 def addView(request):
     username = request.user
     task = request.POST.get('content', '').strip()
@@ -33,18 +34,22 @@ def addView(request):
         messages.add_message(request, messages.INFO, "Task must be 0-100 characters.")
     return redirect('/')
 		
-# @login_required
-def deleteView(request):
-    taskid = request.POST.get('task_id')
+@login_required
+def deleteView(request, taskid):
     Task.objects.filter(pk=taskid).delete()
     return redirect('/')
 
+# fixed deleteView:
+# @login_required
+# def deleteView(request, taskid):
+#     task = Task.objects.get(pk=taskid)
+#     if request.user == task.creator:
+#         Task.objects.filter(pk=taskid).delete()
+#         return redirect('/')
+#     else:
+#         return redirect('/')
 
 
-# def homeView(request):
-#     user=request.user
-#     user_tasks=Task.objects.filter(creator=user)
-#     return render(request, 'index.html', {"tasks": user_tasks})
 @login_required
 def homeView(request):
     user=request.user
@@ -53,4 +58,8 @@ def homeView(request):
     user_tasks = Task.objects.raw(query)
     return render(request, 'index.html', {"tasks": user_tasks})
 
-
+# fixed homeView
+# def homeView(request):
+#     user=request.user
+#     user_tasks=Task.objects.filter(creator=user)
+#     return render(request, 'index.html', {"tasks": user_tasks})
