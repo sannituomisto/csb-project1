@@ -21,7 +21,7 @@ def signUpView(request):
         form = RegisterForm()
     return render(request, 'signup.html', {'form': form})
 
-@csrf_exempt # remove this line to fix csrf flaw
+@csrf_exempt # remove this line for CSRF fix
 @login_required
 def addView(request):
     username = request.user
@@ -32,7 +32,7 @@ def addView(request):
         messages.add_message(request, messages.INFO, "Task must be 1-100 characters.")
     return redirect('/')
 		
-@csrf_exempt # remove this line when fix csrf flaw
+@csrf_exempt # remove this line for CSRF fix
 @login_required
 def deleteView(request, taskid):
     Task.objects.filter(pk=taskid).delete()
@@ -56,7 +56,8 @@ def homeView(request):
     user_tasks = Task.objects.raw(query)
     return render(request, 'index.html', {"tasks": user_tasks})
 
-# fixed homeView
+# fixed homeView:
+# @login_required
 # def homeView(request):
 #     user=request.user
 #     user_tasks=Task.objects.filter(creator=user)
