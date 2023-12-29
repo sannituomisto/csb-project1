@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .models import Task
 from .forms import RegisterForm
 from django.contrib import messages
@@ -21,7 +21,7 @@ def signUpView(request):
         form = RegisterForm()
     return render(request, 'signup.html', {'form': form})
 
-
+@csrf_exempt # remove this line to fix csrf flaw
 @login_required
 def addView(request):
     username = request.user
@@ -32,6 +32,7 @@ def addView(request):
         messages.add_message(request, messages.INFO, "Task must be 1-100 characters.")
     return redirect('/')
 		
+@csrf_exempt # remove this line when fix csrf flaw
 @login_required
 def deleteView(request, taskid):
     Task.objects.filter(pk=taskid).delete()
