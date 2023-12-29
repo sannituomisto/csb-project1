@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-&dw@*n@*w%ef!z&oh7i!ugkixmdkp&9g)nt2%f=bc(lj5%ruq_
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -72,6 +73,7 @@ WSGI_APPLICATION = 'csb_project1.wsgi.application'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
 
 
 # Database

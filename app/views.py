@@ -8,10 +8,8 @@ from django.contrib import messages
 
 
 def signUpView(request):
-    if request.method == 'GET':
-    # fixed line 11: if request.method == 'POST':
-        form = RegisterForm(request.GET)
-        # fixed line 13: form = RegisterForm(request.POST)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -31,7 +29,7 @@ def addView(request):
     if len(task) > 0 and len(task) < 100:
         Task.objects.create(creator=username, content=task)
     else:
-        messages.add_message(request, messages.INFO, "Task must be 0-100 characters.")
+        messages.add_message(request, messages.INFO, "Task must be 1-100 characters.")
     return redirect('/')
 		
 @login_required
@@ -52,8 +50,7 @@ def deleteView(request, taskid):
 
 @login_required
 def homeView(request):
-    user=request.user
-    userid=user.id
+    userid=request.user.id
     query = "SELECT * FROM app_task WHERE creator_id = %s" % userid
     user_tasks = Task.objects.raw(query)
     return render(request, 'index.html', {"tasks": user_tasks})

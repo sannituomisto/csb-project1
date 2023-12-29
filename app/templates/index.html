@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <body>
-        <h1>Your tasks</h1>
+        <h1>Tasks</h1>
+        <h2> {{user.username}} tasks </h2>
         <ul>
             {% for task in tasks %}
 		    <li>
                 {{task.content}}
                 <form action="delete/{{task.id}}" method="POST">
-                    {% csrf_token %}
+                    <!-- {% csrf_token %} -->
                     <input type="hidden" name="task_id" value="{{task.id}}">
                     <input type="submit" value="Delete"/>
                 </form>
@@ -22,7 +23,7 @@
             {% endfor %}
         {% endif %}
         <form action="add/" method="POST">
-            {% csrf_token %}
+            <!-- {% csrf_token %} -->
             <br/>
             <input type="text" name="content"/>
             <input type="submit"/>
@@ -32,7 +33,7 @@
         <br/>
         
         <form action='logout/' method="POST">
-			{% csrf_token %}
+			<!-- {% csrf_token %} -->
             <input type="submit" value="Logout"/>
         </form>
     </body>
